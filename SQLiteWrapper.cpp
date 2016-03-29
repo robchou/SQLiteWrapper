@@ -25,9 +25,9 @@
 
 */
 
+#include <iostream>
 #include "SQLiteWrapper.h"
 // TODO: raus
-#include <windows.h>
 
 SQLiteWrapper::SQLiteWrapper() : db_(0) {
 }
@@ -180,15 +180,15 @@ bool SQLiteStatement::BindNull(int pos_zero_indexed) {
 bool SQLiteStatement::Execute() {
     int rc = sqlite3_step(stmt_);
     if (rc == SQLITE_BUSY) {
-        ::MessageBox(0, "SQLITE_BUSY", 0, 0); 
+        std::cout << "SQLITE_BUSY" << std::endl;
         return false;
     }
     if (rc == SQLITE_ERROR) {
-        ::MessageBox(0, "SQLITE_ERROR", 0, 0); 
+        std::cout << "SQLITE_ERROR" << std::endl;
         return false;
     }
     if (rc == SQLITE_MISUSE) {
-        ::MessageBox(0, "SQLITE_ERROR", 0, 0); 
+        std::cout << "SQLITE_ERROR" << std::endl;
         return false;
     }
     if (rc != SQLITE_DONE) {
@@ -236,13 +236,13 @@ bool SQLiteStatement::NextRow() {
         return false;
     } 
     else if (rc == SQLITE_MISUSE) {
-        ::MessageBox(0,  "SQLiteStatement::NextRow SQLITE_MISUSE", 0, 0);
+        std::cout << "SQLiteStatement::NextRow SQLITE_MISUSE" << std::endl;
     } 
     else if (rc == SQLITE_BUSY  ) {
-        ::MessageBox(0, "SQLiteStatement::NextRow SQLITE_BUSY", 0, 0);
+        std::cout << "SQLiteStatement::NextRow SQLITE_BUSY" << std::endl;
     } 
     else if (rc == SQLITE_ERROR ) {
-        ::MessageBox(0, "SQLiteStatement::NextRow SQLITE_ERROR", 0, 0);
+        std::cout << "SQLiteStatement::NextRow SQLITE_ERROR" << std::endl;
     }
     return false;
 }
